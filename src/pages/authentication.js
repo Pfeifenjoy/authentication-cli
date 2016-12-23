@@ -18,17 +18,33 @@ const FormContainer = styled.div`
     flex-grow: 1;
 `
 
-export default props => <Page>
-    <FormContainer>
-        { props.children }
-    </FormContainer>
-</Page>
+export default p => {
+    const {
+        children,
+        ...props
+    } = p
+    return <Page { ...props }>
+        <FormContainer>
+            { children }
+        </FormContainer>
+    </Page>
+}
 
-export function connect(path, link, Component) {
+/**
+ * This function takes a Component.
+ * Than it decorates the component with
+ * the given properties.
+ * @param submit {function} A callback function which is fired when the default action of the authentication form is started. This function must return a promise.
+ * @param path {string} Specify a path of the route where the AuthenticationPage should be registered
+ * @params link {string} a login page creates a link to a register page and so on.
+ *                      With this parameter this link is specified.
+ */
+export function connect(Component, submit, path, link) {
     return <Route
         path={ path }
         component={
             props => <Component
+                submit={ submit }
                 linkPath={ link }
                 { ...props }
             />
