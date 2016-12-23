@@ -5,7 +5,7 @@ var WebpackNotifierPlugin = require("webpack-notifier")
 module.exports = {
     devtool: "source-map",
     entry: {
-        bundle: "./src/bundle.js",
+        bundle: "./demo/bundle.js",
         vendor: ["react"]
     },
     output: {
