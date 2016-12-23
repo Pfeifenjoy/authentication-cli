@@ -45,10 +45,10 @@ class Register extends Component {
     }
 
     render() {
-        const { linkPath, ...props } = this.props
+        const { linkPath, background, ...props } = this.props
         const { email, password, repassword, busy } = this.state
 
-        return <Authentication>
+        return <Authentication background={ background }>
             <Box title="Register">
                 <form method="post">
                     <Input 
@@ -87,4 +87,4 @@ class Register extends Component {
     }
 }
 
-export default (submit, path, link) => connect(Register, submit, path, link)
+export default (submit, path, link, background) => connect(Register, submit, path, link, background)

@@ -4,6 +4,7 @@ import { Router, browserHistory } from "react-router"
 import { Provider } from "react-redux"
 import store from "./store"
 import { login, register } from "../src"
+const background = require("./images/background.jpg")
 
 const onLogin = () => {
     console.log("login");
@@ -21,8 +22,8 @@ const onRegister = () => {
 const App = () => {
     return <Provider store={ store() }>
         <Router history={ browserHistory }>
-            { login(onLogin, "login", "register") }
-            { register(onRegister, "register", "login") }
+            { login(onLogin, "login", "register", background) }
+            { register(onRegister, "register", "login", background) }
         </Router>
     </Provider>
 }

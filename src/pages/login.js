@@ -38,10 +38,10 @@ class Login extends Component {
     }
 
     render() {
-        const { linkPath, ...props } = this.props
+        const { linkPath, background, ...props } = this.props
         const { busy, email, password } = this.state
 
-        return <Authentication>
+        return <Authentication background={ background }>
             <Box title="Login" { ...props }>
                 <form method="post">
                     <Input 
@@ -72,4 +72,4 @@ class Login extends Component {
         </Authentication>
     }
 }
-export default (submit, path, link) => connect(Login, submit, path, link)
+export default (submit, path, link, background) => connect(Login, submit, path, link, background)

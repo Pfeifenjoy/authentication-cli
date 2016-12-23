@@ -10,6 +10,7 @@ const Page = styled.section`
     min-height: 100%;
     width: 100%;
     position: absolute;
+    background-image: url(${ props => props.background });
 `
 
 const FormContainer = styled.div`
@@ -39,13 +40,14 @@ export default p => {
  * @params link {string} a login page creates a link to a register page and so on.
  *                      With this parameter this link is specified.
  */
-export function connect(Component, submit, path, link) {
+export function connect(Component, submit, path, link, background) {
     return <Route
         path={ path }
         component={
             props => <Component
                 submit={ submit }
                 linkPath={ link }
+                background={ background }
                 { ...props }
             />
         }

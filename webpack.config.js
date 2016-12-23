@@ -15,10 +15,7 @@ module.exports = {
     },
     plugins: [
         new WebpackNotifierPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || "development")
-        })
+        new webpack.HotModuleReplacementPlugin()
     ],
     module: {
         loaders: [
@@ -38,6 +35,13 @@ module.exports = {
                         "transform-decorators-legacy"
                     ]
                 }
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
             }
         ]
     },
