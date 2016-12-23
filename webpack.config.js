@@ -1,5 +1,6 @@
 var path = require("path")
 var webpack = require("webpack")
+var WebpackNotifierPlugin = require("webpack-notifier")
 
 module.exports = {
     devtool: "source-map",
@@ -13,6 +14,7 @@ module.exports = {
         publicPath: "/build/client/"
     },
     plugins: [
+        new WebpackNotifierPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || "development")
