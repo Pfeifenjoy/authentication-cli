@@ -40,14 +40,16 @@ export default p => {
  * @params link {string} a login page creates a link to a register page and so on.
  *                      With this parameter this link is specified.
  */
-export function connect(Component, submit, path, link, background) {
+export function connect(Component, submit, props) {
+    const {
+        path, ...rest
+    } = props
     return <Route
         path={ path }
         component={
             props => <Component
                 submit={ submit }
-                linkPath={ link }
-                background={ background }
+                { ...rest }
                 { ...props }
             />
         }

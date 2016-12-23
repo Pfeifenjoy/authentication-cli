@@ -22,8 +22,8 @@ const onRegister = () => {
 const App = () => {
     return <Provider store={ store() }>
         <Router history={ browserHistory }>
-            { login(onLogin, "login", "register", background) }
-            { register(onRegister, "register", "login", background) }
+            { login(onLogin, { background }) }
+            { register(onRegister, { background }) }
         </Router>
     </Provider>
 }

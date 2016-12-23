@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Box } from "arwed-components"
 import { Link } from "react-router"
-import { login } from "../actions/user"
 import Authentication, { connect } from "./authentication"
 import { Input, Button } from "../controls"
 
@@ -72,4 +71,7 @@ class Login extends Component {
         </Authentication>
     }
 }
-export default (submit, path, link, background) => connect(Login, submit, path, link, background)
+export default (submit, props) => {
+    props.path = props.path || "/login"
+    return connect(Login, submit, props)
+}

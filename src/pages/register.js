@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Box } from "arwed-components"
 import { Link } from "react-router"
-import { register } from "../actions/user"
 import Authentication, { connect } from "./authentication"
 import { Input, Button } from "../controls"
 
@@ -87,4 +86,7 @@ class Register extends Component {
     }
 }
 
-export default (submit, path, link, background) => connect(Register, submit, path, link, background)
+export default (submit, props) => {
+    props.path = props.path || "/register"
+    return connect(Register, submit, props)
+}
