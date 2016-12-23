@@ -4,7 +4,8 @@ import { Route } from "react-router"
 
 const Page = styled.section`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
     min-height: 100%;
     width: 100%;
@@ -15,7 +16,6 @@ const FormContainer = styled.div`
     min-width: 15em;
     max-width: 25em;
     width: 45%;
-    flex-grow: 1;
 `
 
 export default p => {
