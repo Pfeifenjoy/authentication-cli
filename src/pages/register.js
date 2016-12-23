@@ -1,100 +1,90 @@
 import React, { Component } from "react"
-import { Button, Input } from "arwed-components"
-import { Link, Route } from "react-router"
+import { Box } from "arwed-components"
+import { Link } from "react-router"
 import { register } from "../actions/user"
 import Authentication, { connect } from "./authentication"
-import styled from "styled-components"
+import { Input, Button } from "../controls"
 
 
-const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
-    background-color: #ecf0f1;
-    border-radius: 0.3em;
-`
 
 class Register extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            email: "",
-            password: "",
-            repassword: ""
-        }
+    state = {
+        email: "",
+        password: "",
+        repassword: "",
+        busy: false
     }
 
     handleEmailChange(event) {
-        const email = event.target.value
-        this.setState({ email })
+        this.setState({ email: event.target.value });
     }
-
     handlePasswordChange(event) {
-        const password = event.target.value
-        this.setState({ password })
+        this.setState({ password: event.target.value });
     }
-
     handleRepasswordChange(event) {
-        const repassword = event.target.value
-        this.setState({ repassword })
+        this.setState({ repassword: event.target.value });
     }
 
     handleSubmit(event) {
         event.preventDefault()
         const { email, password, repassword } = this.state
-        this.props.dispatch(register(email, password, repassword))
-        this.setState({
-            email: "",
-            password: "",
-            repassword: ""
-        })
+
+        this.setState({ busy: true })
+        this.props.submit(email, password, repassword)
+            .then(() => this.setState({ 
+                    email: "",
+                    password: "",
+                    repassword: "",
+                    busy: false
+                })
+            )
+            .catch(() => {
+                this.setState({ busy: false })
+            })
     }
 
     render() {
-        const {
-            linkPath,
-            ...props
-        } = this.props
-
-        const buttonStyle = {
-            marginTop: "2em"
-        }
+        const { linkPath, ...props } = this.props
+        const { email, password, repassword, busy } = this.state
 
         return <Authentication>
-            <Form>
-                <Input 
-                    name="email" 
-                    placeholder="email"
-                    value={ this.state.email }
-                    onChange={ e => this.handleEmailChange(e) }
-                />
-                <Input 
-                    name="password"
-                    placeholder="password"
-                    type="password"
-                    value={ this.state.password }
-                    onChange={ e => this.handlePasswordChange(e) }
-                />
-                <Input 
-                    name="repassword"
-                    placeholder="repassword"
-                    type="password"
-                    value={ this.state.repassword }
-                    onChange={ e => this.handleRepasswordChange(e) }
-                />
-                <Button
-                    type="submit"
-                    style={ buttonStyle }
-                >
-                    Register
-                </Button>
-                <p>
-                    or <Link to={ linkPath || "/login" }>Login</Link>
-                </p>
-            </Form>
+            <Box title="Register">
+                <form method="post">
+                    <Input 
+                        onChange={ e => this.handleEmailChange(e) }
+                        value={ email }
+                        busy={ busy }
+                        placeholder="email"
+                    />
+                    <Input 
+                        onChange={ e => this.handlePasswordChange(e) }
+                        value={ password }
+                        placeholder="password"
+                        busy={ busy }
+                        type="password"
+                    />
+                    <Input 
+                        onChange={ e => this.handleRepasswordChange(e) }
+                        value={ repassword }
+                        placeholder="repassword"
+                        busy={ busy }
+                        type="password"
+                    />
+                    <Button
+                        onClick={ e => this.handleSubmit(e) }
+                        busy={ busy }
+                        type="submit"
+                    >
+                        Register
+                    </Button>
+                    <p>
+                        or <Link to={ linkPath || "/login" }>Login</Link>
+                    </p>
+                </form>
+            </Box>
         </Authentication>
     }
 }
 
-export default (path, link) => connect(path, link, Register)
+export default (submit, path, link) => connect(Register, submit, path, link)
