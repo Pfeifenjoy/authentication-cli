@@ -1,41 +1,75 @@
-import React from "react"
-import { Button, Input as InputTemplate, Box } from "arwed-components"
+import React, { Component } from "react"
+import { Box } from "arwed-components"
 import { Link } from "react-router"
 import { login } from "../actions/user"
 import Authentication, { connect } from "./authentication"
-import styled from "styled-components"
+import { Input, Button } from "../controls"
 
-const INPUT_MARGIN = 0.4
 
-const Input = styled(InputTemplate)`
-    width: calc(100% - ${ INPUT_MARGIN * 2 }em);
-    margin: ${ INPUT_MARGIN }em;
-`
+class Login extends Component {
 
-const Login = props => <Authentication>
-    <Box title="Login">
-        <form method="post">
-            <Input 
-                name="email" 
-                placeholder="email"
-            />
-            <Input 
-                name="password"
-                placeholder="password"
-                type="password"
-            />
-            <Button
-                type="submit"
-            >
-                Login
-            </Button>
-            <p>
-                or <Link to={ props.linkPath || "/register" }>Register</Link>
-            </p>
-        </form>
-    </Box>
-</Authentication>
+    state = {
+        username: "",
+        password: "",
+        busy: false
+    }
 
-export default (path, link) => {
-    return connect(path, link, Login)
+    handleEmailChange(event) {
+        this.setState({ email: event.target.value })
+    }
+
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault()
+        const { email, password } = this.state
+        this.setState({ busy: true })
+        this.props.submit(email, password)
+            .then(() => this.setState({
+                email: "",
+                password: "",
+                busy: false
+            }))
+            .catch(() => {
+                this.setState({ busy: false })
+            })
+    }
+
+    render() {
+        const { linkPath, ...props } = this.props
+        const { busy, email, password } = this.state
+
+        return <Authentication>
+            <Box title="Login" { ...props }>
+                <form method="post">
+                    <Input 
+                        onChange={ e => this.handleEmailChange(e) }
+                        value={ email }
+                        placeholder="email"
+                        busy={ busy }
+                    />
+                    <Input 
+                        onChange={ e => this.handlePasswordChange(e) }
+                        value={ password }
+                        placeholder="password"
+                        type="password"
+                        busy={ busy }
+                    />
+                    <Button
+                        onClick={ e => this.handleSubmit(e) }
+                        type="submit"
+                        busy={ busy }
+                    >
+                        Login
+                    </Button>
+                    <p>
+                        or <Link to={ linkPath || "/register" }>Register</Link>
+                    </p>
+                </form>
+            </Box>
+        </Authentication>
+    }
 }
+export default (submit, path, link) => connect(Login, submit, path, link)
