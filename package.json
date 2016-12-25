@@ -2,12 +2,12 @@
   "name": "arwed-authentication-cli",
   "version": "0.0.1",
   "description": "A generic module for user authentication and registration.",
-  "main": "build/server/index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./server.js",
     "clean": "rm -rf build",
-    "build": "webpack -p --define process.env.NODE_ENV='\"production\"' && babel src --out-dir build/server",
+    "build": "babel src --out-dir build/",
     "prepublish": "npm run build",
     "prebuild": "npm run clean"
   },

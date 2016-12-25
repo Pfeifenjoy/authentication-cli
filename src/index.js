@@ -1,3 +1,3 @@
-export { login, register } from "./pages"
+export { Login, Register } from "./pages"
 export { requireAuth } from "./utils"
 

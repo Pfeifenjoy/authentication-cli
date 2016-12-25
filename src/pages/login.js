@@ -5,7 +5,7 @@ import Authentication, { connect } from "./authentication"
 import { Input, Button } from "../controls"
 
 
-class Login extends Component {
+export default class Login extends Component {
 
     state = {
         username: "",
@@ -37,7 +37,7 @@ class Login extends Component {
     }
 
     render() {
-        const { linkPath, background, ...props } = this.props
+        const { linkPath, background, submit, ...props } = this.props
         const { busy, email, password } = this.state
 
         return <Authentication background={ background }>
@@ -70,8 +70,4 @@ class Login extends Component {
             </Box>
         </Authentication>
     }
-}
-export default (submit, props) => {
-    props.path = props.path || "/login"
-    return connect(Login, submit, props)
 }

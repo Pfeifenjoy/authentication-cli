@@ -6,7 +6,7 @@ import { Input, Button } from "../controls"
 
 
 
-class Register extends Component {
+export default class Register extends Component {
 
     state = {
         email: "",
@@ -44,7 +44,7 @@ class Register extends Component {
     }
 
     render() {
-        const { linkPath, background, ...props } = this.props
+        const { linkPath, background, submit, ...props } = this.props
         const { email, password, repassword, busy } = this.state
 
         return <Authentication background={ background }>
@@ -84,9 +84,4 @@ class Register extends Component {
             </Box>
         </Authentication>
     }
-}
-
-export default (submit, props) => {
-    props.path = props.path || "/register"
-    return connect(Register, submit, props)
 }

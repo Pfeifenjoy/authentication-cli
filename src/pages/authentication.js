@@ -9,7 +9,9 @@ const Page = styled.section`
     align-items: center;
     min-height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     background-image: url(${ props => props.background });
 `
 
@@ -29,30 +31,5 @@ export default p => {
             { children }
         </FormContainer>
     </Page>
-}
-
-/**
- * This function takes a Component.
- * Than it decorates the component with
- * the given properties.
- * @param submit {function} A callback function which is fired when the default action of the authentication form is started. This function must return a promise.
- * @param path {string} Specify a path of the route where the AuthenticationPage should be registered
- * @params link {string} a login page creates a link to a register page and so on.
- *                      With this parameter this link is specified.
- */
-export function connect(Component, submit, props) {
-    const {
-        path, ...rest
-    } = props
-    return <Route
-        path={ path }
-        component={
-            props => <Component
-                submit={ submit }
-                { ...rest }
-                { ...props }
-            />
-        }
-    />
 }
 
