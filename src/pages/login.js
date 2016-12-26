@@ -8,7 +8,7 @@ import { Input, Button } from "../controls"
 export default class Login extends Component {
 
     state = {
-        username: "",
+        email: "",
         password: "",
         busy: false
     }
@@ -31,13 +31,19 @@ export default class Login extends Component {
                 password: "",
                 busy: false
             }))
+            .then(() => {
+                const { onAfterAuthentication } = this.props
+                if(onAfterAuthentication) {
+                    onAfterAuthentication()
+                }
+            })
             .catch(() => {
                 this.setState({ busy: false })
             })
     }
 
     render() {
-        const { linkPath, background, submit, ...props } = this.props
+        const { linkPath, background, submit, onAfterAuthentication, ...props } = this.props
         const { busy, email, password } = this.state
 
         return <Authentication background={ background }>
